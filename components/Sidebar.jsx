@@ -21,6 +21,7 @@ const Sidebar = () => {
                     src="https://help.twitter.com/content/dam/help-twitter/brand/logo.png"
                     width="50"
                     height="50"
+                    alt="twitter_logo"
                 />
             </div>
 
