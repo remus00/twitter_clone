@@ -32,7 +32,7 @@ const Widget = ({ newsResults, randomUsersResults }) => {
                 </button>
             </div>
 
-            <div className="text-gray-700 space-y-3 bg-gray-100 rounded-xl pt-2 w-[90%] xl:w-[75] sticky top-16">
+            <div className="text-gray-700 space-y-3 bg-gray-100 rounded-xl pt-2 w-[90%] xl:w-[75%] sticky top-16">
                 <h4 className="font-bold text-xl px-4">Who to Follow</h4>
                 {randomUsersResults
                     .slice(0, randomUserNumber)
@@ -57,7 +57,7 @@ const Widget = ({ newsResults, randomUsersResults }) => {
                                         randomUser.name.last}
                                 </h5>
                             </div>
-                            <button className="ml-auto bg-black text-white rounded-full text-sm px-3.5 py-1.5 font-bold">
+                            <button className="ml-auto bg-black text-white rounded-full text-sm px-3.5 py-1.5 font-bold hoverTransition hover:bg-white hover:text-black">
                                 Follow
                             </button>
                         </div>
