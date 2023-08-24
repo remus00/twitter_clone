@@ -40,7 +40,7 @@ const Sidebar = () => {
             </div>
 
             {/* Button */}
-            <button className="bg-[#1DA1F2] text-white rounded-full w-56 h-12 font-bold shadow-md hover:brightness-90 text-lg hidden xl:inline">
+            <button className="bg-customBlue text-white rounded-full w-56 h-12 font-bold shadow-md hover:brightness-90 text-lg hidden xl:inline">
                 Tweet
             </button>
 
