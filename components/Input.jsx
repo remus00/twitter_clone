@@ -71,7 +71,7 @@ const Input = () => {
                         onClick={signOut}
                         src={session.user.image}
                         alt="profile_icon"
-                        className="h-11 w-11 rounded-full cursor-pointer hover:brightness-95"
+                        className="h-11 w-11 rounded-full cursor-pointer hover:brightness-95 hoverTransition"
                     />
                     <div className="w-full divide-y divide-gray-200">
                         <div className="">
