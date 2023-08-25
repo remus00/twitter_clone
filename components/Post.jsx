@@ -26,6 +26,8 @@ const Post = ({ post }) => {
     const { data: session } = useSession();
     const [likes, setLikes] = useState([]);
     const [hasLiked, setHasLiked] = useState(false);
+    const [comments, setComments] = useState([]);
+    const [hasCommented, setHasCommented] = useState(false);
     const [open, setOpen] = useRecoilState(modalState);
     const [postId, setPostId] = useRecoilState(postIdState);
 
@@ -33,6 +35,13 @@ const Post = ({ post }) => {
         const unsubscribe = onSnapshot(
             collection(db, "posts", post.id, "likes"),
             (snapshot) => setLikes(snapshot.docs),
+        );
+    }, [db]);
+
+    useEffect(() => {
+        const unsubscribe = onSnapshot(
+            collection(db, "posts", post.id, "comments"),
+            (snapshot) => setComments(snapshot.docs),
         );
     }, [db]);
 
@@ -80,7 +89,7 @@ const Post = ({ post }) => {
             />
 
             {/* Right Side */}
-            <div className="w-full">
+            <div className="flex-1">
                 {/* Header */}
                 <div className="flex justify-between items-center">
                     {/* post user Info */}
@@ -120,17 +129,24 @@ const Post = ({ post }) => {
 
                 {/* icons */}
                 <div className="flex justify-between text-gray-500 p-2 ">
-                    <ChatBubbleOvalLeftEllipsisIcon
-                        onClick={() => {
-                            if (!session) {
-                                signIn();
-                            } else {
-                                setPostId(post.id);
-                                setOpen(!open);
-                            }
-                        }}
-                        className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-sky-100"
-                    />
+                    <div className="flex items-center">
+                        <ChatBubbleOvalLeftEllipsisIcon
+                            onClick={() => {
+                                if (!session) {
+                                    signIn();
+                                } else {
+                                    setPostId(post.id);
+                                    setOpen(!open);
+                                }
+                            }}
+                            className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-sky-100"
+                        />
+                        {comments.length > 0 && (
+                            <span className=" text-sm select-none">
+                                {comments.length}
+                            </span>
+                        )}
+                    </div>
 
                     {session?.user?.uid === post?.data().id && (
                         <TrashIcon
