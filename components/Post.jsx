@@ -6,13 +6,14 @@ import {
     ShareIcon,
     TrashIcon,
 } from "@heroicons/react/24/outline";
+import Moment from "react-moment";
 
 const Post = ({ post }) => {
     return (
         <div className="flex p-3 cursor-pointer border-b border-gray-200">
             {/* Image */}
             <img
-                src={post.userImg}
+                src={post.data().userImg}
                 alt="user_img"
                 className="w-11 h-11 rounded-full mr-4"
             />
@@ -24,13 +25,13 @@ const Post = ({ post }) => {
                     {/* post user Info */}
                     <div className="flex space-x-1 items-center whitespace-nowrap">
                         <h4 className="font-bold text-[15px] sm:text-[16px] hover:underline hoverTransition">
-                            {post.name}
+                            {post.data().name}
                         </h4>
                         <span className="text-sm sm:text-[15px]">
-                            @{post.username} -
+                            @{post.data().username} -
                         </span>
                         <span className="text-sm sm:text-[15px] hover:underline hoverTransition">
-                            {post.timestamp}
+                            <Moment fromNow>{post?.timestamp?.toDate()}</Moment>
                         </span>
                     </div>
 
@@ -40,12 +41,12 @@ const Post = ({ post }) => {
 
                 {/* post text */}
                 <p className="text-gray-800 text-[15px] sm:text-[16px] mb-2 ">
-                    {post.text}
+                    {post.data().text}
                 </p>
 
                 {/* post image */}
                 <img
-                    src={post.img}
+                    src={post.data().image}
                     alt="post_img"
                     className="rounded-2xl mr-2"
                 />

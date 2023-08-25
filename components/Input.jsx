@@ -87,7 +87,7 @@ const Input = () => {
                         {selectedFile && (
                             <div className="relative">
                                 <XMarkIcon
-                                    className="h-8 text-red-500 absolute top-2 left-2 cursor-pointer shadow-md shadow-white rounded-full"
+                                    className="border border-red-500 h-8 text-red-500 absolute m-2 cursor-pointer shadow-md shadow-white rounded-full"
                                     onClick={() => setSelectedFile(null)}
                                 />
                                 <img
