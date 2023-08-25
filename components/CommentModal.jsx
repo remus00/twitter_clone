@@ -40,7 +40,7 @@ const CommentModal = () => {
 
         setOpen(false);
         setInput("");
-        router.push(`posts/${postId}`);
+        router.push(`/posts/${postId}`);
     };
 
     useEffect(() => {
@@ -129,18 +129,8 @@ const CommentModal = () => {
 
                                 <div className="flex justify-between items-center pt-2.5">
                                     <div className="flex gap-1">
-                                        <div
-                                        /* onClick={() =>
-                                                    filePickerRef.current.click()
-                                                } */
-                                        >
+                                        <div>
                                             <PhotoIcon className="h-10 w-10 hoverEffect p-2 text-sky-500 hover:bg-sky-100" />
-                                            {/* <input
-                                                    hidden
-                                                    type="file"
-                                                    ref={filePickerRef}
-                                                    onChange={addImageToPost}
-                                                /> */}
                                         </div>
                                         <FaceSmileIcon className="h-10 w-10 hoverEffect p-2 text-sky-500 hover:bg-sky-100" />
                                     </div>

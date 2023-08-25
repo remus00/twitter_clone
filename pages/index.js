@@ -2,25 +2,32 @@ import CommentModal from "@/components/CommentModal";
 import Feed from "@/components/Feed";
 import Sidebar from "@/components/Sidebar";
 import Widget from "@/components/Widget";
+import Head from "next/head";
 
 export default function Home({ newsResults, randomUsersResults }) {
     return (
-        <main className="flex min-h-screen mx-auto">
-            {/* Sidebar */}
-            <Sidebar />
+        <>
+            <Head>
+                <title>Twitter Clone</title>
+            </Head>
 
-            {/* "feed section" */}
-            <Feed />
+            <main className="flex min-h-screen mx-auto">
+                {/* Sidebar */}
+                <Sidebar />
 
-            {/* Widget */}
-            <Widget
-                newsResults={newsResults.articles}
-                randomUsersResults={randomUsersResults.results}
-            />
+                {/* "feed section" */}
+                <Feed />
 
-            {/* Modal */}
-            <CommentModal />
-        </main>
+                {/* Widget */}
+                <Widget
+                    newsResults={newsResults.articles}
+                    randomUsersResults={randomUsersResults.results}
+                />
+
+                {/* Modal */}
+                <CommentModal />
+            </main>
+        </>
     );
 }
 
@@ -29,7 +36,6 @@ export async function getServerSideProps() {
         "https://saurav.tech/NewsAPI/top-headlines/category/business/us.json",
     ).then((res) => res.json());
 
-    /* Who to follow Section */
     const randomUsersResults = await fetch(
         "https://randomuser.me/api/?results=50&inc=name,login,picture",
     ).then((res) => res.json());
