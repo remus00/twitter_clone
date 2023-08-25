@@ -1,4 +1,4 @@
-import { db } from "@/firebase";
+import { db, storage } from "@/firebase";
 import {
     ChartBarIcon,
     ChatBubbleOvalLeftEllipsisIcon,
@@ -18,6 +18,7 @@ import {
 import Moment from "react-moment";
 import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import { deleteObject, ref } from "firebase/storage";
 
 const Post = ({ post }) => {
     const { data: session } = useSession();
@@ -56,6 +57,13 @@ const Post = ({ post }) => {
         }
     };
 
+    const deletePost = async () => {
+        if (window.confirm("Are you sure you want to delete this post?")) {
+            deleteDoc(doc(db, "posts", post.id));
+            deleteObject(ref(storage, `posts/${post.id}/image`));
+        }
+    };
+
     return (
         <div className="flex p-3 cursor-pointer border-b border-gray-200">
             {/* Image */}
@@ -66,7 +74,7 @@ const Post = ({ post }) => {
             />
 
             {/* Right Side */}
-            <div>
+            <div className="w-full">
                 {/* Header */}
                 <div className="flex justify-between items-center">
                     {/* post user Info */}
@@ -94,16 +102,27 @@ const Post = ({ post }) => {
                 </p>
 
                 {/* post image */}
-                <img
-                    src={post.data().image}
-                    alt="post_img"
-                    className="rounded-2xl mr-2"
-                />
+                {post?.data().image ? (
+                    <img
+                        src={post?.data().image}
+                        alt="post_img"
+                        className="rounded-2xl mr-2"
+                    />
+                ) : (
+                    ""
+                )}
 
                 {/* icons */}
                 <div className="flex justify-between text-gray-500 p-2 ">
                     <ChatBubbleOvalLeftEllipsisIcon className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-sky-100" />
-                    <TrashIcon className="h-9 w-9 hoverEffect p-2 hover:text-red-600 hover:bg-red-100" />
+
+                    {session?.user?.uid === post?.data().id && (
+                        <TrashIcon
+                            className="h-9 w-9 hoverEffect p-2 hover:text-red-600 hover:bg-red-100"
+                            onClick={deletePost}
+                        />
+                    )}
+
                     <div className="flex items-center">
                         {hasLiked ? (
                             <HeartIconFilled
@@ -116,6 +135,7 @@ const Post = ({ post }) => {
                                 onClick={likePost}
                             />
                         )}
+
                         {likes.length > 0 && (
                             <span
                                 className={`${
