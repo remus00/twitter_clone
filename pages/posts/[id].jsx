@@ -2,7 +2,13 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { AnimatePresence, motion } from "framer-motion";
-import { doc, onSnapshot } from "firebase/firestore";
+import {
+    collection,
+    doc,
+    onSnapshot,
+    orderBy,
+    query,
+} from "firebase/firestore";
 import Sidebar from "@/components/Sidebar";
 import Widget from "@/components/Widget";
 import Input from "@/components/Input";
@@ -10,14 +16,28 @@ import Head from "next/head";
 import { db } from "@/firebase";
 import Post from "@/components/Post";
 import CommentModal from "@/components/CommentModal";
+import Comment from "@/components/Comment";
 
 export default function PostPage({ newsResults, randomUsersResults }) {
     const [post, setPost] = useState();
+    const [comments, setComments] = useState([]);
     const router = useRouter();
     const { id } = router.query;
 
+    // Get Post data
     useEffect(() => {
         onSnapshot(doc(db, "posts", id), (snapshot) => setPost(snapshot));
+    }, [db, id]);
+
+    // getComment of the post
+    useEffect(() => {
+        onSnapshot(
+            query(
+                collection(db, "posts", id, "comments"),
+                orderBy("timestamp", "desc"),
+            ),
+            (snapshot) => setComments(snapshot.docs),
+        );
     }, [db, id]);
 
     return (
@@ -43,6 +63,18 @@ export default function PostPage({ newsResults, randomUsersResults }) {
                     </div>
 
                     <Post id={id} post={post} />
+
+                    {comments.length > 0 && (
+                        <div>
+                            {comments.map((comment) => (
+                                <Comment
+                                    key={comment.id}
+                                    id={comment.id}
+                                    comment={comment.data()}
+                                />
+                            ))}
+                        </div>
+                    )}
                 </div>
 
                 <Widget
