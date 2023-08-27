@@ -12,14 +12,20 @@ import {
     UserIcon,
 } from "@heroicons/react/24/outline";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const Sidebar = () => {
     const { data: session } = useSession();
 
+    const router = useRouter();
+
     return (
         <div className="hidden sm:flex flex-col p-2 xl:items-start fixed h-full xl:ml-24">
             {/* Twitter Logo */}
-            <div className="hoverEffect p-0 hover:bg-blue-100 ">
+            <div
+                className="hoverEffect p-0 hover:bg-blue-100 "
+                onClick={() => router.push("/")}
+            >
                 <Image
                     src="https://help.twitter.com/content/dam/help-twitter/brand/logo.png"
                     width="50"

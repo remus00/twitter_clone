@@ -10,7 +10,10 @@ const Signin = ({ providers }) => {
             />
             <div className="flex justify-center items-center">
                 {Object.values(providers).map((provider) => (
-                    <div className="flex flex-col items-center">
+                    <div
+                        key={provider.name}
+                        className="flex flex-col items-center"
+                    >
                         <img
                             src="https://help.twitter.com/content/dam/help-twitter/brand/logo.png"
                             alt="twitter_logo"
