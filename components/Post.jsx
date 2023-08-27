@@ -31,6 +31,7 @@ const Post = ({ post, id }) => {
     const [hasCommented, setHasCommented] = useState(false);
     const [open, setOpen] = useRecoilState(modalState);
     const [postId, setPostId] = useRecoilState(postIdState);
+
     const router = useRouter();
 
     useEffect(() => {
@@ -112,7 +113,10 @@ const Post = ({ post, id }) => {
                 </div>
 
                 {/* post text */}
-                <p className="text-gray-800 text-[15px] sm:text-[16px] mb-2 ">
+                <p
+                    className="text-gray-800 text-[15px] sm:text-[16px] mb-2 "
+                    onClick={() => router.push(`/posts/${id}`)}
+                >
                     {post?.data()?.text}
                 </p>
 
@@ -122,6 +126,7 @@ const Post = ({ post, id }) => {
                         src={post?.data()?.image}
                         alt="post_img"
                         className="rounded-2xl mr-2 select-none"
+                        onClick={() => router.push(`/posts/${id}`)}
                     />
                 ) : (
                     ""
